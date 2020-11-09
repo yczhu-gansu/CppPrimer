@@ -92,4 +92,42 @@ while (cin >> word)
 Check the state of the stream returned from the >> expression.
 
 #### Interrogating the State of a Stream
+Sometimes we need to know why the stream is invalid. 
+
+The IO library defines a machine-dependent integral type named *iostate* that it
+uses to convey information about the state of a stream. The IO classes define
+four *constexpr* values of type *iostate* that represent particular bit
+patterns. These values are used to indicate particular kinds of IO conditions.
+They can be used to indicate particular kinds of IO conditions. They can be used
+with the bitwise operators to test or set multiple flags in one operation.
+* *badbit*, indicates a system-level failure. It is usually not possible to use
+  a stream once *badbit* has been set.
+* *failbit*, a recoverable error. It is possible to continuing using the stream.
+* *eofbit, failbit*, reading end-of-file, sets both those bits.
+* *goodbit*, have value 0, indicates no failures on the stream.
+
+If any of *badbit, failbit, eofbit* are set, the a condition that evaluates that
+stream will fail.
+
+The library also defines a set of functions to interrogate the state of these
+flags.
+
+Table: IO Library Condition State
+| **State/Function** | **Description** |
+| --- | --- |
+| strm::iostate | strm is one of the IO types. iostate is a machine-dependent integral type that represents the condition state of a stream. |
+| strm::badbit | strm::iostate value used to indicate that a stream is corrupted. |
+| strm::failbit | strm::iostate value used to indicate that an IO opperation failed. |
+| strm::eofbit | strm::iostate value used to indicate that a stream hit end-of-file. |
+| strm::goodbit | strm::iostate value used to indicate that a stream is not in an error state. This value is guaranteed to be zero. |
+| s.eof() | true if eofbit in the stream s is set. |
+| s.fail() | true if failbit or badbit in the stream s is set. |
+| s.bad() | true if badbit in the stream s is set. |
+| s.good() | true if the stream s is in a valid state. |
+| s.clear() | Reset all condition values in the stream s to valid state.  Returns void.|
+| s.clear(flags) | Reset the condition of s to flags. Type of flags is strm::iostate. Returns void. |
+| s.setstate(flags) | Adds specified conditions(s) to s. Type of flags is strm::iostate. Returns void. |
+| s.rdstate() | Returns current condition of s as a strm::iostate value. |
+
+#### Managing the Condition State
 

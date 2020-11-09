@@ -28,4 +28,5 @@ Language and library facilities for managing dynamic memory. One of the most
 important new library classes, which are standardized versions of smart
 pointers. By using smart pointers, we can make code that uses dynamic memory
 much more robust.
+
 8. [The IO Library](./part2/chap08.md)
